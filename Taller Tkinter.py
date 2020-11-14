@@ -147,11 +147,13 @@ def calculadora(num1, num2, operador):
     return resultado
 
 def click_calcular(label, num1, num2, operador, entrada1, entrada2,tab2, Historial, contador):
-    Historial.append(num1)
-    Historial.append(num2)
-    Historial.append(operador)
-    comprobación = comprobar(num1,num2, entrada1, entrada2)
-    if comprobación[0] == True:
+    Historial.insert(0,num1)
+    Historial.insert(1, operador)
+    Historial.insert(2,num2)
+    Historial.insert(3,'=')
+
+    comprobacion = comprobar(num1,num2, entrada1, entrada2)
+    if comprobacion[0] == True:
         #Conversion de valores
         valor1 = round(float(num1),8)
         valor2 = round(float(num2),8)
@@ -160,29 +162,30 @@ def click_calcular(label, num1, num2, operador, entrada1, entrada2,tab2, Histori
         res = calculadora(valor1, valor2, operador)
 
         #Enviar Historial
-        Historial.append(res)
+        Historial.insert(4,str(res))
+        Historial.insert(5, '\n')
         historial(tab2, Historial)
 
         # Actualizacion del texto en la etiqueta
         label.configure(text='Resultado: ' + str(res))
     else:
         # Deshacer Color Rojo - Limpiar Campo 1
-        if comprobación[1]==False:
+        if comprobacion[1]==False:
             messagebox.showerror('Caracter Incorrecto', 'Por favor ingrese un numero!!')
             entrada1.delete(0, 'end')
             entrada1.configure(bg='white')
         # Deshacer Color Rojo - Limpiar Campo 2
-        if comprobación[2]==False:
+        if comprobacion[2]==False:
             messagebox.showerror('Caracter Incorrecto', 'Por favor ingrese un numero!!')
             entrada2.delete(0, 'end')
             entrada2.configure(bg='white')
         # Deshacer Color Rojo -  Campo 1 Vacio
-        if comprobación[3] == False:
+        if comprobacion[3] == False:
             messagebox.showwarning('Campo Vacio', 'Por favor ingrese un numero!!')
             entrada1.delete(0, 'end')
             entrada1.configure(bg='white')
         # Deshacer Color Rojo -  Campo 2 Vacio
-        if comprobación[4] == False:
+        if comprobacion[4] == False:
             messagebox.showwarning('Campo Vacio', 'Por favor ingrese un numero!!')
             entrada2.delete(0, 'end')
             entrada2.configure(bg='white')
@@ -224,42 +227,14 @@ def comprobar(num1,num2, entrada1, entrada2):
     return BanderaG, BanderaEnt1, BanderaEnt2,BanderaEsp1,BanderaEsp2
 
 def historial(tab2,Historial):
-    global contador
-    NewCaracter1=NewCaracter2=NewCaracter3=NewCaracter4=NewCaracter5=tk.Label()
-    if contador ==1:
-        NewCaracter1 = tk.Label(tab2, text=Historial[0] + Historial[2] + Historial[1] + ' = ' + str(Historial[3]))
-        NewCaracter1.grid(column=0, row=(contador))
-        print(contador)
-        contador +=1
-        return
-
-    if contador == 2:
-        NewCaracter2 = tk.Label(tab2, text=Historial[4] + Historial[6] + Historial[5] + ' = ' + str(Historial[7]))
-        NewCaracter2.grid(column=0, row=(contador))
-        contador += 1
-        return
-
-    if contador == 3:
-        NewCaracter3 = tk.Label(tab2, text=Historial[8] + Historial[10] + Historial[9] + ' = ' + str(Historial[11]))
-        NewCaracter3.grid(column=0, row=(contador))
-        contador += 1
-        return
-
-    if contador == 4:
-        NewCaracter4 = tk.Label(tab2,text=Historial[12] + Historial[14] + Historial[13] + ' = ' + str(Historial[15]))
-        NewCaracter4.grid(column=0, row=(contador))
-        contador += 1
-        return
-
-    if contador == 5:
-        NewCaracter5 = tk.Label(tab2,text=Historial[16] + Historial[18] + Historial[17] + ' = ' + str(Historial[19]))
-        NewCaracter5.grid(column=0, row=(contador))
-        contador +=1
-
-    if contador == 6:
-        NewCaracter5.destroy()
-        del(Historial[:4])
-        contador = 5
+    resultado= ''
+    print(Historial)
+    NewCaracter1 = tk.Label(tab2, text='Hola')
+    NewCaracter1.grid(column=0, row=2)
+    if len(Historial) > 36:
+        Historial = Historial[:-6]
+    Historial = "".join(Historial)
+    NewCaracter1.config(text=Historial)
 
 def main():
     init_window()
