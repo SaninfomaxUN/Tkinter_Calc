@@ -6,7 +6,7 @@ from tkinter import scrolledtext
 
 def init_window():
     window = tk.Tk() #Crear la pantalla
-    window.title('Mi primera aplicación') #Agregar titulo a la pantalla
+    window.title('Calculadora SaninfomaxUN - v2.0') #Agregar titulo a la pantalla
     # Establecer tamaño de la pantalla (Ancho: 400px y largo: 250px)
     window.geometry('500x300')
 
@@ -107,7 +107,7 @@ def init_window():
     label_titulo.grid(column=0, row=0)
 
     def btnemail():
-        messagebox.showinfo('Buzon de Sugerencias', 'Comentario ingresado Exitosamente!! \n Ya puedes escribir tu comentario!')
+        messagebox.showinfo('Buzon de Sugerencias', 'Correo ingresado Exitosamente!! \n Ya puedes escribir tu comentario!')
         txt.configure(state='normal')
     label_correo = Label(tab3,text='Ingresa tu correo para continuar!' )
     label_correo.grid(column=0, row=1)
@@ -227,14 +227,14 @@ def comprobar(num1,num2, entrada1, entrada2):
     return BanderaG, BanderaEnt1, BanderaEnt2,BanderaEsp1,BanderaEsp2
 
 def historial(tab2,Historial):
-    resultado= ''
     print(Historial)
     NewCaracter1 = tk.Label(tab2, text='Hola')
-    NewCaracter1.grid(column=0, row=2)
+    NewCaracter1.grid(column=0, row=3)
     if len(Historial) > 36:
         Historial = Historial[:-6]
     Historial = "".join(Historial)
-    NewCaracter1.config(text=Historial)
+    NewCaracter1.config(text=Historial,font='bold 12',
+                      fg="red",)
 
 def main():
     init_window()
